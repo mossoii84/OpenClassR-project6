@@ -48,21 +48,43 @@ exports.putOneSauce = (req, res, next) => {
 
         Sauce.findOne({_id: req.params.id})
             .then((sauce) => {
+
                 if (sauce.userId != authUser) {
                     res.status(403).json({ message : 'unauthorized request'});
                 } 
                 else {
+                    if(sauceObject.imageUrl){
+                    const filename = sauce.imageUrl.split('/images/')[1];
+                    fs.unlink(`images/${filename}`, () => { //delete image if we have new image
                     Sauce.updateOne({ _id: req.params.id}, { ...sauceObject,
                         _id: req.params.id})
                         .then(() => res.status(200).json({message : 'Objet modifié!'}))
                         .catch(error => res.status(401).json({ error }));
-                }
-            })
+                
+                         })
+                    } else {
+                        Sauce.updateOne({ _id: req.params.id}, { ...sauceObject,
+                            _id: req.params.id})
+                            .then(() => res.status(200).json({message : 'Objet modifié!'}))
+                            .catch(error => res.status(401).json({ error }));
+                    }
+        }
+        })
             .catch((error) => {res.status(400).json({ error }); });
         
     };
 
 
+
+
+
+
+
+
+
+
+
+    
 
 
 // Delete
