@@ -1,10 +1,18 @@
 const express = require('express');
+const helmet = require("helmet");
 const app = express();
 const mongoose = require('mongoose');
 const path = require('path');
 
 const userRoutes = require('./routers/routerUser');
 const saucesRoutes = require('./routers/routerSauces');
+
+
+// This sets custom options for the `referrerPolicy` middleware.
+app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
+
+   // very important
+  app.use(express.json()); 
 
 // connect BD
 mongoose.connect('mongodb+srv://user:user@cluster0.1gz0n7s.mongodb.net/?retryWrites=true&w=majority',
@@ -13,8 +21,7 @@ mongoose.connect('mongodb+srv://user:user@cluster0.1gz0n7s.mongodb.net/?retryWri
   .then(() => console.log('Connexion à MongoDB réussie !'))
   .catch(() => console.log('Connexion à MongoDB échouée !'));
 
-// very important
-  app.use(express.json()); 
+
 
 // CORS 
 app.use((req, res, next) => {
