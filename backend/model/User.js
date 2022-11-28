@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const uniqueValidator = require('mongoose-unique-validator');
+var mongodbErrorHandler = require('mongoose-mongodb-errors');
 
 
 const userSchame = mongoose.Schema({
@@ -10,5 +11,8 @@ const userSchame = mongoose.Schema({
 
 // activation uniqueValidator for email
 userSchame.plugin(uniqueValidator);
+//for Mongoose-MongoDB-Errors
+userSchame.plugin(mongodbErrorHandler);
 
 module.exports = mongoose.model('user', userSchame);
+

@@ -76,17 +76,6 @@ exports.putOneSauce = (req, res, next) => {
 
 
 
-
-
-
-
-
-
-
-
-    
-
-
 // Delete
     exports.deleteSauce = (req, res, next) => {
         Sauce.findOne({_id: req.params.id})
