@@ -5,14 +5,25 @@
 // mongoose-mongodb-errors
 
 const express = require('express');
-const app = express();
-const mongoose = require('mongoose');
-const path = require('path');
 const helmet = require('helmet');
 require('dotenv').config();
+const mongoose = require('mongoose');
+const path = require('path');
+const rateLimit = require("express-rate-limit");
+const app = express();
+
+
+
+
 
 const userRoutes = require('./routers/routerUser');
 const saucesRoutes = require('./routers/routerSauces');
+
+const limiter = rateLimit({
+  max: 200,
+  windowMs: 60 * 60 * 1000,
+  message: "Too many request from this IP"
+});
 
 
 // connect via .env
@@ -26,9 +37,16 @@ mongoose.connect(process.env.My_BD,
 
    // very important
    app.use(express.json()); 
-
+   app.use(limiter);
 // This sets custom options for the `referrerPolicy` middleware.
 app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
+
+
+
+
+
+
+
 
 
 // CORS 
@@ -38,6 +56,7 @@ app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
   next();
 });
+
 
 
 // user route
