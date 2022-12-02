@@ -12,10 +12,6 @@ const path = require('path');
 const rateLimit = require("express-rate-limit");
 const app = express();
 
-
-
-
-
 const userRoutes = require('./routers/routerUser');
 const saucesRoutes = require('./routers/routerSauces');
 
@@ -40,11 +36,6 @@ mongoose.connect(process.env.My_BD,
    app.use(limiter);
 // This sets custom options for the `referrerPolicy` middleware.
 app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
-
-
-
-
-
 
 
 

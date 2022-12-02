@@ -6,7 +6,8 @@ const MIME_TYPES = {
   'image/png': 'png'
 };
 
-const storage = multer.diskStorage(
+const storage =  multer({
+  storage: multer.diskStorage(
   {
     destination: (req, file, callback) => {
     callback(null, 'images');
@@ -18,7 +19,21 @@ const storage = multer.diskStorage(
     const extension = MIME_TYPES[file.mimetype];
     callback(null, name + '-' + Date.now() + '.' + extension);
   }
+}),
+  fileFilter: function(req, file, callback){
+                 // Ограничение типа загрузки файла, загрузить только картинки формата PNG
+        if(    (MIME_TYPES[file.mimetype] === 'jpg')  
+            || (MIME_TYPES[file.mimetype] === 'jpeg')
+            || (MIME_TYPES[file.mimetype] === 'png')
+          ){
+          callback(null, true)
+           } 
+        else {
+          //callback(null, false)
+          callback(new Error('I don\'t have a clue!'), false)
+        }
+    }
 });
 
 
-module.exports = multer({storage: storage}).single('image');
+module.exports = storage.single('image');
