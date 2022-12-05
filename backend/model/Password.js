@@ -4,15 +4,14 @@ const passwordSchema = new passwordValidator();
 
 
 passwordSchema
-    .is().min(2)
-
+    .is().min(6)
+    .is().max(20)
+    .has().uppercase()
+    .has().lowercase()
+    .has().digits()
+    .has().not().spaces()
 
 // passwordSchema
-//     .is().min(6)
-//     .is().max(20)
-//     .has().uppercase()
-//     .has().lowercase()
-//     .has().digits()
-//     .has().not().spaces()
+//     .is().min(2)
 
 module.exports = passwordSchema;
