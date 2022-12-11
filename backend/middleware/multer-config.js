@@ -30,7 +30,7 @@ const storage =  multer({
            } 
         else {
           //callback(null, false)
-          callback(new Error('I don\'t have a clue!'), false)
+          callback(new Error('Cette extension n accepte pas'), false)
         }
     }
 });

@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken'); 
 
-// compare token from forms and database
+// compare token on the pages
 module.exports = (req, res, next) => {
    try {
 
